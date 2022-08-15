@@ -44,6 +44,30 @@ export function Home() {
     setTasks(updatedTasks);
   }
 
+  function handleEditTask(id: number,taskNewTitle: string) {
+   
+    const found = tasks.find(task => {
+      return task.title === taskNewTitle;
+    });
+
+    if(found){
+      Alert.alert(
+        "Ops",
+        `"${taskNewTitle}" Já cadastrado.`,
+        [          
+          { text: "Entendi"},
+        ]
+      );
+      return false;      
+    }  
+
+    const editTasks = tasks.map(task => (
+       task.id === id ? {...task, title: taskNewTitle}: task
+    ));   
+    
+    setTasks(editTasks);
+  }
+
   function handleRemoveTask(id: number) {    
     Alert.alert(
       "Remover item",
@@ -76,6 +100,7 @@ export function Home() {
         tasks={tasks} 
         toggleTaskDone={handleToggleTaskDone}
         removeTask={handleRemoveTask} 
+        editTask={handleEditTask}
       />
     </View>
   )
